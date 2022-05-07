@@ -3,17 +3,25 @@
     import logoWA from "../images/logo-WA-pixel.png";
     import logoInvite from "../images/logo-invite-pixel.png";
     import logoRegister from "../images/logo-register-pixel.png";
+    import { currentPlayerGroupIdStore } from "../../Stores/CurrentPlayerGroupStore";
     import { menuVisiblilityStore } from "../../Stores/MenuStore";
     import { chatVisibilityStore } from "../../Stores/ChatStore";
     import { limitMapStore } from "../../Stores/GameStore";
     import { get } from "svelte/store";
     import { ADMIN_URL } from "../../Enum/EnvironmentVariable";
+    import { onDestroy } from "svelte";
     import { showShareLinkMapModalStore } from "../../Stores/ModalStore";
     import LL from "../../i18n/i18n-svelte";
     import { analyticsClient } from "../../Administration/AnalyticsClient";
     import { gameManager } from "../../Phaser/Game/GameManager";
 
     let miniLogo = gameManager.currentStartedRoom?.miniLogo ?? logoWA;
+
+    let currentPlayerIsInGroup: boolean;
+    const unsubscribeGroupId = currentPlayerGroupIdStore.subscribe((value) => {
+        currentPlayerIsInGroup = value !== undefined;
+    });
+    onDestroy(unsubscribeGroupId);
 
     function showMenu() {
         menuVisiblilityStore.set(!get(menuVisiblilityStore));
@@ -69,15 +77,17 @@
             on:click={showMenu}
         />
     {/if}
-    <img
-        src={logoTalk}
-        alt={$LL.menu.icon.open.chat()}
-        class="nes-pointer"
-        draggable="false"
-        on:dragstart|preventDefault={noDrag}
-        on:click={() => analyticsClient.openedChat()}
-        on:click={showChat}
-    />
+    {#if currentPlayerIsInGroup}
+        <img
+            src={logoTalk}
+            alt={$LL.menu.icon.open.chat()}
+            class="nes-pointer"
+            draggable="false"
+            on:dragstart|preventDefault={noDrag}
+            on:click={() => analyticsClient.openedChat()}
+            on:click={showChat}
+        />
+    {/if}
 </main>
 
 <style lang="scss">

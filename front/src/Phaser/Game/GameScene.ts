@@ -84,7 +84,7 @@ import { jitsiParticipantsCountStore, userIsAdminStore, userIsJitsiDominantSpeak
 import { contactPageStore } from "../../Stores/MenuStore";
 import type { WasCameraUpdatedEvent } from "../../Api/Events/WasCameraUpdatedEvent";
 import { audioManagerFileStore } from "../../Stores/AudioManagerStore";
-import { currentPlayerGroupLockStateStore } from "../../Stores/CurrentPlayerGroupStore";
+import { currentPlayerGroupIdStore, currentPlayerGroupLockStateStore } from "../../Stores/CurrentPlayerGroupStore";
 import { errorScreenStore } from "../../Stores/ErrorScreenStore";
 
 import EVENT_TYPE = Phaser.Scenes.Events;
@@ -192,12 +192,16 @@ export class GameScene extends DirtyScene {
     private emoteMenuUnsubscriber!: Unsubscriber;
 
     private localVolumeStoreUnsubscriber: Unsubscriber | undefined;
+<<<<<<< HEAD
     private followUsersColorStoreUnsubscriber!: Unsubscriber;
     private userIsJitsiDominantSpeakerStoreUnsubscriber!: Unsubscriber;
     private jitsiParticipantsCountStoreUnsubscriber!: Unsubscriber;
     private highlightedEmbedScreenUnsubscriber!: Unsubscriber;
     private embedScreenLayoutStoreUnsubscriber!: Unsubscriber;
     private availabilityStatusStoreUnsubscriber!: Unsubscriber;
+=======
+    private followUsersColorStoreUnsubscribe!: Unsubscriber;
+>>>>>>> 6ab9388a (impr: Display chat icon only if player is in a group)
 
     MapUrlFile: string;
     roomUrl: string;
@@ -238,11 +242,15 @@ export class GameScene extends DirtyScene {
     private loader: Loader;
     private lastCameraEvent: WasCameraUpdatedEvent | undefined;
     private firstCameraUpdateSent: boolean = false;
+<<<<<<< HEAD
     private currentPlayerGroupId?: number;
     private showVoiceIndicatorChangeMessageSent: boolean = false;
     private jitsiDominantSpeaker: boolean = false;
     private jitsiParticipantsCount: number = 0;
     private cleanupDone: boolean = false;
+=======
+    private showVoiceIndicatorChangeMessageSent: boolean = false;
+>>>>>>> 6ab9388a (impr: Display chat icon only if player is in a group)
     public readonly superLoad: SuperLoaderPlugin;
     private xmppClient!: XmppClient;
 
@@ -788,6 +796,9 @@ export class GameScene extends DirtyScene {
                 );
 
                 this.connection.groupDeleteMessageStream.subscribe((message) => {
+                    if (get(currentPlayerGroupIdStore) === message.groupId) {
+                        currentPlayerGroupIdStore.set(undefined);
+                    }
                     try {
                         this.deleteGroup(message.groupId);
                     } catch (e) {
@@ -827,7 +838,7 @@ export class GameScene extends DirtyScene {
                 });
 
                 this.connection.groupUsersUpdateMessageStream.subscribe((message) => {
-                    this.currentPlayerGroupId = message.groupId;
+                    currentPlayerGroupIdStore.set(message.groupId);
                 });
 
                 this.connection.groupUsersUpdateMessageStream.subscribe((message) => {
@@ -2219,7 +2230,7 @@ ${escapedMessage}
         sprite.setDisplayOrigin(48, 48).setDepth(DEPTH_BUBBLE_CHAT_SPRITE);
         this.add.existing(sprite);
         this.groups.set(groupPositionMessage.groupId, sprite);
-        if (this.currentPlayerGroupId === groupPositionMessage.groupId) {
+        if (get(currentPlayerGroupIdStore) === groupPositionMessage.groupId) {
             currentPlayerGroupLockStateStore.set(groupPositionMessage.locked);
         }
         return sprite;
