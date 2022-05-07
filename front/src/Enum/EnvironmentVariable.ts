@@ -26,6 +26,7 @@ export const POSTHOG_API_KEY: string = (getEnvConfig("POSTHOG_API_KEY") as strin
 export const POSTHOG_URL = getEnvConfig("POSTHOG_URL") || undefined;
 export const DISABLE_ANONYMOUS: boolean = getEnvConfig("DISABLE_ANONYMOUS") === "true";
 export const OPID_LOGIN_SCREEN_PROVIDER = getEnvConfig("OPID_LOGIN_SCREEN_PROVIDER");
+export const OPID_CLIENT_LOGOUT_URL = getEnvConfig("OPID_CLIENT_LOGOUT_URL") || undefined;
 const FALLBACK_LOCALE = getEnvConfig("FALLBACK_LOCALE") || undefined;
 export const MOODLE_URL = getEnvConfig("MOODLE_URL") || undefined;
 

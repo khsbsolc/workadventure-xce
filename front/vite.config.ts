@@ -46,6 +46,7 @@ export default defineConfig({
                 "NODE_ENV",
                 "DISABLE_ANONYMOUS",
                 "OPID_LOGIN_SCREEN_PROVIDER",
+                "OPID_CLIENT_LOGOUT_URL",
                 "FALLBACK_LOCALE",
                 "MOODLE_URL",
             ],

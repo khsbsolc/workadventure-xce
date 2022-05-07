@@ -1,5 +1,6 @@
 <script lang="ts">
     import { gameManager } from "../../Phaser/Game/GameManager";
+    import { OPID_CLIENT_LOGOUT_URL } from "../../Enum/EnvironmentVariable";
     import { SelectCompanionScene, SelectCompanionSceneName } from "../../Phaser/Login/SelectCompanionScene";
     import { menuIconVisiblilityStore, menuVisiblilityStore } from "../../Stores/MenuStore";
     import { selectCompanionSceneVisibleStore } from "../../Stores/SelectCompanionStore";
@@ -11,6 +12,7 @@
     import { enableCameraSceneVisibilityStore } from "../../Stores/MediaStore";
     import btnProfileSubMenuCamera from "../images/btn-menu-profile-camera.svg";
     import btnProfileSubMenuIdentity from "../images/btn-menu-profile-identity.svg";
+    import btnProfileSubMenuLogout from "../images/btn-menu-profile-logout.svg";
     import btnProfileSubMenuCompanion from "../images/btn-menu-profile-companion.svg";
     import Woka from "../Woka/Woka.svelte";
     import Companion from "../Companion/Companion.svelte";
@@ -44,6 +46,10 @@
         disableMenuStores();
         enableCameraSceneVisibilityStore.showEnableCameraScene();
         gameManager.leaveGame(EnableCameraSceneName, new EnableCameraScene());
+    }
+
+    function logout() {
+        window.open(OPID_CLIENT_LOGOUT_URL);
     }
 </script>
 
@@ -98,6 +104,17 @@
                 />
                 <span class="">{$LL.menu.profile.edit.camera()}</span>
             </button>
+            {#if OPID_CLIENT_LOGOUT_URL}
+                <button type="button" class="tw-w-full outline" on:click|preventDefault={logout}>
+                    <img
+                        src={btnProfileSubMenuLogout}
+                        alt={$LL.menu.profile.logout()}
+                        width="26px"
+                        height="26px"
+                    />
+                    <span class="btn-hover">{$LL.menu.profile.logout()}</span>
+                </button>
+            {/if}
         </section>
     </div>
 
