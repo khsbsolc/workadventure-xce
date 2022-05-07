@@ -9,6 +9,7 @@ const menu: BaseTranslation = {
             register: "Register",
             chat: "Open chat",
             userlist: "User list",
+            moodle: "Open Moodle",
         },
     },
     visitCard: {

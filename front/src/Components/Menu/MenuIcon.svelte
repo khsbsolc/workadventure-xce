@@ -3,14 +3,17 @@
     import logoSettings from "../images/logo-settings.png";
     import logoInvite from "../images/logo-invite-pixel.png";
     import logoRegister from "../images/logo-register-pixel.png";
+    import logoMoodle from "../images/logo-moodle.png";
     import { currentPlayerGroupIdStore } from "../../Stores/CurrentPlayerGroupStore";
     import { menuVisiblilityStore } from "../../Stores/MenuStore";
     import { chatVisibilityStore } from "../../Stores/ChatStore";
     import { limitMapStore } from "../../Stores/GameStore";
     import { get } from "svelte/store";
-    import { ADMIN_URL } from "../../Enum/EnvironmentVariable";
     import { onDestroy } from "svelte";
+    import { ADMIN_URL, MOODLE_URL } from "../../Enum/EnvironmentVariable";
     import { showShareLinkMapModalStore } from "../../Stores/ModalStore";
+    import { coWebsiteManager } from "../../WebRtc/CoWebsiteManager";
+    import { SimpleCoWebsite } from "../../WebRtc/CoWebsite/SimpleCoWebsite";
     import LL from "../../i18n/i18n-svelte";
     import { analyticsClient } from "../../Administration/AnalyticsClient";
     import { gameManager } from "../../Phaser/Game/GameManager";
@@ -41,6 +44,21 @@
 
     function noDrag() {
         return false;
+    }
+
+    async function openMoodle() {
+        if (!MOODLE_URL) {
+            return;
+        }
+        const coWebsite: SimpleCoWebsite = new SimpleCoWebsite(
+            new URL(MOODLE_URL),
+            false, // allow API
+            undefined, // allow policy
+            undefined, // width percent
+            true // closable
+        );
+        coWebsiteManager.addCoWebsiteToStore(coWebsite, undefined);
+        await coWebsiteManager.loadCoWebsite(coWebsite);
     }
 </script>
 
@@ -75,6 +93,16 @@
             on:dragstart|preventDefault={noDrag}
             on:click={() => analyticsClient.openedMenu()}
             on:click={showMenu}
+        />
+    {/if}
+    {#if MOODLE_URL}
+        <img
+            src={logoMoodle}
+            alt={$LL.menu.icon.open.moodle()}
+            class="nes-pointer"
+            draggable="false"
+            on:dragstart|preventDefault={noDrag}
+            on:click|preventDefault={openMoodle}
         />
     {/if}
     {#if currentPlayerIsInGroup}

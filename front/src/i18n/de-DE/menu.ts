@@ -9,6 +9,7 @@ const menu: NonNullable<Translation["menu"]> = {
             register: "Registrieren",
             chat: "Chat öffnen",
             userlist: "Benutzerliste",
+            moodle: "Moodle öffnen",
         },
     },
     visitCard: {
