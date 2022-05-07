@@ -1,6 +1,6 @@
 <script lang="ts">
     import logoTalk from "../images/logo-message-pixel.png";
-    import logoWA from "../images/logo-WA-pixel.png";
+    import logoSettings from "../images/logo-settings.png";
     import logoInvite from "../images/logo-invite-pixel.png";
     import logoRegister from "../images/logo-register-pixel.png";
     import { currentPlayerGroupIdStore } from "../../Stores/CurrentPlayerGroupStore";
@@ -68,7 +68,7 @@
         />
     {:else}
         <img
-            src={miniLogo}
+            src={logoSettings}
             alt={$LL.menu.icon.open.menu()}
             class="nes-pointer"
             draggable="false"
