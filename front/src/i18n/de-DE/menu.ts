@@ -23,7 +23,7 @@ const menu: NonNullable<Translation["menu"]> = {
             camera: "Kameraeinstellungen ändern",
         },
         login: "Einloggen",
-        logout: "Ausloggen",
+        logout: "Abmelden",
     },
     settings: {
         gameQuality: {
