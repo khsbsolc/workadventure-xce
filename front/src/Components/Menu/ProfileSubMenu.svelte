@@ -49,7 +49,7 @@
     }
 
     function logout() {
-        window.open(OPID_CLIENT_LOGOUT_URL);
+        window.open(OPID_CLIENT_LOGOUT_URL, "_self");
     }
 </script>
 
