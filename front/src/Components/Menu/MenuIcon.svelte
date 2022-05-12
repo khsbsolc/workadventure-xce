@@ -50,6 +50,16 @@
         if (!MOODLE_URL) {
             return;
         }
+
+        // If already open, close Moodle iframe
+        const matchingCoWebsites = coWebsiteManager.getCoWebsites().filter((cw) => {
+            return cw.getUrl().href.startsWith(MOODLE_URL ?? 'invalid');
+        });
+        if (matchingCoWebsites.length > 0) {
+            coWebsiteManager.closeCoWebsite(matchingCoWebsites[0]);
+            return;
+        }
+
         const coWebsite: SimpleCoWebsite = new SimpleCoWebsite(
             new URL(MOODLE_URL),
             false, // allow API
