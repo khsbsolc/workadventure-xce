@@ -175,21 +175,23 @@ class CoWebsiteManager {
             buttonSwipe.style.display = "block";
         });
 
-        buttonSwipe.addEventListener("click", () => {
-            analyticsClient.switchMultiIframe();
-            const mainCoWebsite = this.getMainCoWebsite();
-            const highlightedEmbed = get(highlightedEmbedScreen);
-            if (highlightedEmbed?.type === "cowebsite") {
-                this.goToMain(highlightedEmbed.embed);
+        buttonSwipe.addEventListener("click", () => this.swapMainAndEmbed());
+    }
 
-                if (mainCoWebsite) {
-                    highlightedEmbedScreen.toggleHighlight({
-                        type: "cowebsite",
-                        embed: mainCoWebsite,
-                    });
-                }
+    public swapMainAndEmbed() {
+        analyticsClient.switchMultiIframe();
+        const mainCoWebsite = this.getMainCoWebsite();
+        const highlightedEmbed = get(highlightedEmbedScreen);
+        if (highlightedEmbed?.type === "cowebsite") {
+            this.goToMain(highlightedEmbed.embed);
+
+            if (mainCoWebsite) {
+                highlightedEmbedScreen.toggleHighlight({
+                    type: "cowebsite",
+                    embed: mainCoWebsite,
+                });
             }
-        });
+        }
     }
 
     public cleanup(): void {

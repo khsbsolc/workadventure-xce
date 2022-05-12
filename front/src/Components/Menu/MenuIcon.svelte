@@ -69,6 +69,7 @@
         );
         coWebsiteManager.addCoWebsiteToStore(coWebsite, undefined);
         await coWebsiteManager.loadCoWebsite(coWebsite);
+        coWebsiteManager.swapMainAndEmbed();
     }
 </script>
 
