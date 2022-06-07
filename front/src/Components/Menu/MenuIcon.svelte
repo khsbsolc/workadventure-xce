@@ -4,6 +4,10 @@
     import logoInvite from "../images/logo-invite-pixel.png";
     import logoRegister from "../images/logo-register-pixel.png";
     import logoMoodle from "../images/logo-moodle.png";
+    import silentModeOff from "../images/silentmode-off.png";
+    import silentModeOn from "../images/silentmode-on.png";
+    import { localUserStore } from "../../Connexion/LocalUserStore";
+    import { alwaysSilentStore, denyProximityMeetingStore } from "../../Stores/MediaStore";
     import { currentPlayerGroupIdStore } from "../../Stores/CurrentPlayerGroupStore";
     import { menuVisiblilityStore } from "../../Stores/MenuStore";
     import { chatVisibilityStore } from "../../Stores/ChatStore";
@@ -16,9 +20,12 @@
     import { SimpleCoWebsite } from "../../WebRtc/CoWebsite/SimpleCoWebsite";
     import LL from "../../i18n/i18n-svelte";
     import { analyticsClient } from "../../Administration/AnalyticsClient";
-    import { gameManager } from "../../Phaser/Game/GameManager";
 
-    let miniLogo = gameManager.currentStartedRoom?.miniLogo ?? logoWA;
+    let alwaysSilent: boolean;
+    const unsubscribeAlwaysSilent = alwaysSilentStore.subscribe((value) => {
+        alwaysSilent = value;
+    });
+    onDestroy(unsubscribeAlwaysSilent);
 
     let currentPlayerIsInGroup: boolean;
     const unsubscribeGroupId = currentPlayerGroupIdStore.subscribe((value) => {
@@ -44,6 +51,12 @@
 
     function noDrag() {
         return false;
+    }
+
+    function changeAlwaysSilent() {
+        alwaysSilentStore.set(!alwaysSilent);
+        localUserStore.setAlwaysSilent(alwaysSilent);
+        denyProximityMeetingStore.set(alwaysSilent);
     }
 
     async function openMoodle() {
@@ -106,6 +119,14 @@
             on:click={showMenu}
         />
     {/if}
+    <img
+        src={$alwaysSilentStore ? silentModeOn : silentModeOff}
+        alt={$LL.menu.settings.silentMode()}
+        class="nes-pointer"
+        draggable="false"
+        on:dragstart|preventDefault={noDrag}
+        on:click|preventDefault={changeAlwaysSilent}
+    />
     {#if MOODLE_URL}
         <img
             src={logoMoodle}

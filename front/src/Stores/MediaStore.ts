@@ -196,6 +196,7 @@ function createVideoConstraintStore() {
 export const inJitsiStore = writable(false);
 export const inBbbStore = writable(false);
 export const silentStore = writable(false);
+export const alwaysSilentStore = writable(false);
 export const denyProximityMeetingStore = writable(false);
 
 export const availabilityStatusStore = derived(
