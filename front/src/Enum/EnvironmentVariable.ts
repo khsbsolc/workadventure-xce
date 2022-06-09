@@ -29,6 +29,7 @@ export const OPID_LOGIN_SCREEN_PROVIDER = getEnvConfig("OPID_LOGIN_SCREEN_PROVID
 export const OPID_CLIENT_LOGOUT_URL = getEnvConfig("OPID_CLIENT_LOGOUT_URL") || undefined;
 const FALLBACK_LOCALE = getEnvConfig("FALLBACK_LOCALE") || undefined;
 export const MOODLE_URL = getEnvConfig("MOODLE_URL") || undefined;
+export const NETIQUETTE_URL = getEnvConfig("NETIQUETTE_URL") || undefined;
 
 export {
     DEBUG_MODE,

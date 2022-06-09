@@ -55,6 +55,7 @@ services:
       OPID_LOGIN_SCREEN_PROVIDER: "$OPID_LOGIN_SCREEN_PROVIDER"
       OPID_CLIENT_LOGOUT_URL:
       MOODLE_URL:
+      NETIQUETTE_URL:
     command: yarn run start
     volumes:
       - ./front:/usr/src/app

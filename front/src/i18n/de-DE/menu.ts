@@ -22,6 +22,7 @@ const menu: NonNullable<Translation["menu"]> = {
             companion: "Deinen Begleiter ändern",
             camera: "Kameraeinstellungen ändern",
         },
+        netiquette: "Verhaltensregeln",
         login: "Einloggen",
         logout: "Abmelden",
     },

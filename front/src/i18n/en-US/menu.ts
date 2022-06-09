@@ -22,6 +22,7 @@ const menu: BaseTranslation = {
             companion: "Edit your companion",
             camera: "Edit your camera",
         },
+        netiquette: "Netiquette",
         login: "Sign in",
         logout: "Log out",
     },

@@ -49,6 +49,7 @@ export default defineConfig({
                 "OPID_CLIENT_LOGOUT_URL",
                 "FALLBACK_LOCALE",
                 "MOODLE_URL",
+                "NETIQUETTE_URL",
             ],
         }),
         pluginRewriteAll(),
