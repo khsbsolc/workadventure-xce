@@ -7,10 +7,40 @@ import { gameManager } from "../Phaser/Game/GameManager";
 import { jitsiParticipantsCountStore, userIsJitsiDominantSpeakerStore } from "../Stores/GameStore";
 import { StringUtils } from "../Utils/StringUtils";
 
+const defaultDisabledSounds = [
+    'ASKED_TO_UNMUTE_SOUND',
+    'E2EE_OFF_SOUND',
+    'E2EE_ON_SOUND',
+    'INCOMING_MSG_SOUND',
+    'KNOCKING_PARTICIPANT_SOUND',
+    'LIVE_STREAMING_OFF_SOUND',
+    'LIVE_STREAMING_ON_SOUND',
+    'NO_AUDIO_SIGNAL_SOUND',
+    'NOISY_AUDIO_INPUT_SOUND',
+    'OUTGOING_CALL_EXPIRED_SOUND',
+    'OUTGOING_CALL_REJECTED_SOUND',
+    'OUTGOING_CALL_RINGING_SOUND',
+    'OUTGOING_CALL_START_SOUND',
+    'PARTICIPANT_JOINED_SOUND',
+    'PARTICIPANT_LEFT_SOUND',
+    'RAISE_HAND_SOUND',
+    'REACTION_SOUND',
+    'RECORDING_OFF_SOUND',
+    'RECORDING_ON_SOUND',
+    'TALK_WHILE_MUTED_SOUND',
+];
+
+const defaultPrejoinConfig = {
+    enabled: false,
+    hideDisplayName: false,
+    hideExtraJoinButtons: ["no-audio", "by-phone"],
+};
+
 interface jitsiConfigInterface {
     startWithAudioMuted: boolean;
     startWithVideoMuted: boolean;
-    prejoinPageEnabled: boolean;
+    prejoinConfig: typeof defaultPrejoinConfig;
+    disabledSounds: typeof defaultDisabledSounds;
     disableDeepLinking: boolean;
 }
 
@@ -42,9 +72,10 @@ declare global {
 
 const getDefaultConfig = (): jitsiConfigInterface => {
     return {
-        startWithAudioMuted: !get(requestedMicrophoneState),
-        startWithVideoMuted: !get(requestedCameraState),
-        prejoinPageEnabled: false,
+        startWithAudioMuted: true,
+        startWithVideoMuted: true,
+        prejoinConfig: defaultPrejoinConfig,
+        disabledSounds: defaultDisabledSounds,
         disableDeepLinking: false,
     };
 };
@@ -63,9 +94,12 @@ const mergeConfig = (config?: object) => {
         startWithVideoMuted: (config as jitsiConfigInterface).startWithVideoMuted
             ? true
             : currentDefaultConfig.startWithVideoMuted,
-        prejoinPageEnabled: (config as jitsiConfigInterface).prejoinPageEnabled
-            ? true
-            : currentDefaultConfig.prejoinPageEnabled,
+        prejoinConfig: (config as jitsiConfigInterface).prejoinConfig
+            ? (config as jitsiConfigInterface).prejoinConfig
+            : currentDefaultConfig.prejoinConfig,
+        disabledSounds: (config as jitsiConfigInterface).disabledSounds
+            ? (config as jitsiConfigInterface).disabledSounds
+            : currentDefaultConfig.disabledSounds,
     };
 };
 
@@ -89,28 +123,30 @@ const defaultInterfaceConfig = {
         "camera",
         "closedcaptions",
         "desktop",
-        /*'embedmeeting',*/ "fullscreen",
+        // "embedmeeting",
+        // "fullscreen",
         "fodeviceselection",
         "hangup",
-        "profile",
+        // "profile",
         "chat",
-        "recording",
-        "livestreaming",
+        // "recording",
+        // "livestreaming",
         "etherpad",
         "sharedvideo",
         "settings",
         "raisehand",
         "videoquality",
         "filmstrip",
-        /*'invite',*/ "feedback",
-        "stats",
+        "invite",
+        "feedback",
+        // "stats",
         "shortcuts",
         "tileview",
-        "videobackgroundblur",
         "select-background",
         "download",
         "help",
-        "mute-everyone" /*'security'*/,
+        "mute-everyone",
+        "security",
     ],
 };
 
