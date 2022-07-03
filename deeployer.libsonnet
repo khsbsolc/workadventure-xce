@@ -67,7 +67,6 @@
               "SECRET_JITSI_KEY": env.SECRET_JITSI_KEY,
               "FRONT_URL": "https://play-"+url,
               "ENABLE_OPENAPI_ENDPOINT": "true",
-              "PROMETHEUS_AUTHORIZATION_TOKEN": "promToken",
             } + (if adminUrl != null then {
               # Admin
               "ADMIN_API_URL": adminUrl,
