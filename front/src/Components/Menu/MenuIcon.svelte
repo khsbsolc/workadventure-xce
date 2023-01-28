@@ -64,6 +64,9 @@
             return;
         }
 
+        window.open(MOODLE_URL);
+        return;
+
         // If already open, close Moodle iframe
         const matchingCoWebsites = coWebsiteManager.getCoWebsites().filter((cw) => {
             return cw.getUrl().href.startsWith(MOODLE_URL ?? 'invalid');
